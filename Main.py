@@ -3,9 +3,10 @@ import TiledWindow
 
 
 def main():
-    window:TiledWindow.TiledWindow = TiledWindow.TiledWindow()
 
+    window:TiledWindow.TiledWindow = TiledWindow.TiledWindow()
     window.setup()
+
 
     arcade.run()
 
