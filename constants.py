@@ -67,5 +67,6 @@ tankP2_DEAD = ('Assets/Tank2/sounds/gotgot.wav')
 wall_destroyed_sound = ("Assets/sounds/Explosion+7.wav")
 
 nuke_sound = ('Assets/sounds/power_up.ogg')
+
 default_volume = 0.2
 
