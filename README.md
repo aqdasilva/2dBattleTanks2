@@ -12,3 +12,6 @@ when player dies loads next map
 do not get done:
 i got power ups to spawn but not add to the health
 got tiles to break and not break, but not be able to move
+
+to play:
+run Main.py
