@@ -11,25 +11,25 @@ from constants import missle_tankp1_speed, missle_tankP2_speed, PLAY_GAME, \
 class TiledWindow(arcade.Window):
     def __init__(self):
         super().__init__(960, 960, "Battle of the Tanks")
-        #where tiled map files are
+        # where tiled map files are
         self.map_location = pathlib.Path.cwd() / f'Assets/maps/map1tank.json'
         self.map_location2 = pathlib.Path.cwd() / f'Assets/maps/map2.json'
         self.map_location3 = pathlib.Path.cwd() / 'Assets/maps/map3.json'
-        #lods current scene
+        # lods current scene
         self.current_scene = None
 
         self.mapscene1 = None
         self.mapscene2 = None
         self.mapscene3 = None
 
-        #wall lists layers in map
+        # wall lists layers in map
         self.wall_list = None
         self.wall_list2 = None
         self.wall_list3 = None
-        #power up list
+        # power up list
         self.power_list = None
 
-        #basic physics for the game engine
+        # basic physics for the game engine
         self.simple_physics = None
         self.simple_physics2 = None
 
@@ -38,25 +38,24 @@ class TiledWindow(arcade.Window):
         self.player2: arcade.Sprite = None
         self.power: arcade.Sprite = None
 
-
         self.player_list = None
         self.player2_list = None
 
-        #constants for the speed of the tank missles
+        # constants for the speed of the tank missles
         self.player_shoot_speed = missle_tankp1_speed
         self.player2_shoot_speed = missle_tankP2_speed
 
-        #the movement speed of the tanks
+        # the movement speed of the tanks
         self.move_speed = 1.5
         self.move2_speed = 4
 
         self.prev_scene: arcade.Scene = None
 
-        #tank missles
+        # tank missles
         self.tank_missles_list = None
         self.tankP2_missles = None
 
-        #tanks health
+        # tanks health
         self.tank1_hp = 500
         self.tank2_hp = 200
 
@@ -82,7 +81,7 @@ class TiledWindow(arcade.Window):
         self.game_state = PLAY_GAME
 
     def setup(self):
-        #loads all the maps and current scenes with layers
+        # loads all the maps and current scenes with layers
         sample_map = arcade.tilemap.load_tilemap(self.map_location)
         self.mapscene1 = arcade.Scene.from_tilemap(sample_map)
         self.wall_list = sample_map.sprite_lists["wallLayer"]
@@ -97,31 +96,31 @@ class TiledWindow(arcade.Window):
         self.mapscene3 = arcade.Scene.from_tilemap(map3)
         self.wall_list3 = map3.sprite_lists['wallLayer']
 
-        #player and power up
+        # player and power up
         self.power = arcade.Sprite(pathlib.Path.cwd() / 'Assets/Bonus_Icon.png')
         self.player = arcade.Sprite(pathlib.Path.cwd() / 'Assets/Tank1/Tank/tank_bigRed.png', sprite_scaling_player)
         self.player2 = arcade.Sprite(pathlib.Path.cwd() / 'Assets/Tank2/Tank/tank_blue.png', sprite_scaling_player)
 
-        #starting positions
+        # starting positions
         self.player.center_x = 100
         self.player.center_y = 280
 
         self.player2.center_x = 900
         self.player2.center_y = 620
 
-        #tank shooting directions
+        # tank shooting directions
         self.shoot_tank1_direction = "right"
         self.shoot_tank2_direction = "left"
 
-        #sprite player list
+        # sprite player list
         self.player_list = arcade.SpriteList()
         self.player2_list = arcade.SpriteList()
 
-        #adds player to the list
+        # adds player to the list
         self.player2_list.append(self.player2)
         self.player_list.append(self.player)
 
-        #power up list
+        # power up list
         self.power_list = arcade.SpriteList()
         self.power_list.append(self.power)
 
@@ -132,15 +131,15 @@ class TiledWindow(arcade.Window):
 
         self.current_scene = self.mapscene1
 
-        #missle list
+        # missle list
         self.missle_P1_list = arcade.SpriteList()
         self.missle_P2_list = arcade.SpriteList()
 
-        #score and speed
+        # score and speed
         self.score = 0
         self.speed = 0
 
-        #random power spawns
+        # random power spawns
         self.scale = constants.sprite_scaling_player / 2
         self.power.center_y = randint(25, constants.Y_CONSTANT - 25)
         self.power.center_x = randint(25, constants.X_CONSTANT - 25)
@@ -287,7 +286,7 @@ class TiledWindow(arcade.Window):
             self.player2.change_angle = 0
 
     def spawnRandomPower(self):
-        #should spawn bonus png randomly to add HP
+        # should spawn bonus png randomly to add HP
         for nuke in self.power_list:
             hit_list = arcade.check_for_collision_with_list(nuke, self.player_list)
             nuke.remove_from_sprite_lists()
@@ -297,7 +296,7 @@ class TiledWindow(arcade.Window):
         self.missle_P1_list.update()
         self.missle_P2_list.update()
 
-        #for missle firing and updating when hit players or walls
+        # for missle firing and updating when hit players or walls
 
         for missle in self.missle_P1_list:
             hit_list = arcade.check_for_collision_with_list(missle, self.wall_list)
@@ -307,7 +306,6 @@ class TiledWindow(arcade.Window):
                 for shield in hit_list:
                     shield.remove_from_sprite_lists()
                     arcade.play_sound(self.wall_destroyed_sound)
-
 
             hit_list = arcade.check_for_collision_with_list(missle, self.player2_list)
             if len(hit_list) > 0:
@@ -332,7 +330,6 @@ class TiledWindow(arcade.Window):
             if missle.bottom > SCREEN_HEIGHT:
                 missle.remove_from_sprite_lists()
 
-
         for missle in self.missle_P1_list:
             hit_list2 = arcade.check_for_collision_with_list(missle, self.wall_list2)
             if len(hit_list2) > 0:
@@ -342,13 +339,12 @@ class TiledWindow(arcade.Window):
                     arcade.play_sound(self.wall_destroyed_sound2)
 
         for missle in self.missle_P2_list:
-            hit_list2 = arcade.check_for_collision_with_list(missle,self.wall_list2)
+            hit_list2 = arcade.check_for_collision_with_list(missle, self.wall_list2)
             if len(hit_list2) > 0:
                 missle.remove_from_sprite_lists()
                 for shield in hit_list2:
                     shield.remove_from_sprite_lists()
                     arcade.play_sound(self.wall_destroyed_sound2)
-
 
         for missle in self.missle_P2_list:
             hit_list = arcade.check_for_collision_with_list(missle, self.wall_list)
@@ -412,11 +408,9 @@ class TiledWindow(arcade.Window):
                 if self.tank2_hp == 0:
                     print("you dead dead")
 
-
         if self.current_scene == self.mapscene2:
             self.physics5 = arcade.PhysicsEngineSimple(self.player, self.wall_list2)
             self.physics6 = arcade.PhysicsEngineSimple(self.player2, self.wall_list2)
             return
-
 
         self.simple_physics44.update()
