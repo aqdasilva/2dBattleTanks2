@@ -10,7 +10,9 @@ To Run:
 3. run network
 4. run main
 
-
+Controls:
+player 1: W,A,S,D movement & SPACE BAR = shooting
+player 2: I,J,K,L movement & RIGHT SHIFT = shooting
 
 
 
